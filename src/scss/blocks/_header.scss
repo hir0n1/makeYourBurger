@@ -32,15 +32,15 @@
         font-size: 16px;
         line-height: 20px;
         color: #1F2939;
-        li {   
+        &-btn {   
             margin-left: 60px; 
             list-style-type: none;
             cursor: pointer;
-        }  
-        &_active {
-            border-bottom: 2px solid #5243C2;
-            font-weight: 600;
-        }
+            &_active {
+                border-bottom: 2px solid #5243C2;
+                font-weight: 600;
+            }
+        }    
     }
     &__call {
         font-family: 'Open Sans';
@@ -104,6 +104,7 @@
     box-shadow: 0px 0px 1px 0px;
     overflow: hidden;
     transition: 0.3s all;
+    background-color: #fff;
     &__name {
         margin-bottom: 30px;
         font-weight: 600;
