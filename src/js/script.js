@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    // Кнопки
+
     const   profileButton = document.querySelector('.header__profile')
             profileMenu = document.querySelector('.profile-menu')
             changeScreenBtn = document.querySelectorAll('.js-screen-btn')
@@ -14,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function changeScreen(button, screen) {
         button.forEach((btn) => {
-           btn.addEventListener('click', () => {
+           btn.addEventListener('click', () => {    
                 if(btn.classList.contains('header__nav-btn_active')) {
                     return;
                 }

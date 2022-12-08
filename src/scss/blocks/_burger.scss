@@ -1,0 +1,14 @@
+.build-burger {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    &__burger {
+        margin-left: 7rem;
+        height: 70%;
+        width: 60%;
+        background-image: url(../img/burger/constructor-bg.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
