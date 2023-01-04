@@ -1,0 +1,30 @@
+@import 'libs/bootstrap-reboot.min';
+@import 'base/variables';
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+
+body {
+    position: relative;
+    max-width: 1540px; 
+    margin: 0 auto;
+    height: 100vh;
+    padding: 0 3rem;
+    user-select: none;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+main {
+    height: calc(100% - 140px)
+}
+
+@import 'blocks/animations';
+@import 'base/fonts';
+@import 'blocks/header';
+@import 'blocks/discover';
+@import 'blocks/footer';
