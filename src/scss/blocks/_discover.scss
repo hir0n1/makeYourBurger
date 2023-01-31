@@ -6,6 +6,10 @@
     align-items: center;
     justify-content: center;
     height: calc(100% - 86px);
+    &_build {
+        grid-template-columns: 30% 40% 30%;
+        grid-template-rows: 60% 40%;
+    }
     &__item {
         background-position: center bottom;
         aspect-ratio: auto;

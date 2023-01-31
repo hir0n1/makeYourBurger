@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
             changeScreenBtn = document.querySelectorAll('.js-screen-btn')
             screen = document.querySelectorAll('.js-screen')
             headerBtns = document.querySelectorAll('.header__nav-btn')
+            discover = document.querySelector('.discover')
             
     function showMenu(button, menu) {
         button.addEventListener('click', () => {
@@ -23,8 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 headerBtns.forEach((item) => {
                     if(item.classList.contains('header__nav-btn_active')) {
                         item.classList.remove('header__nav-btn_active')
+                        discover.classList.remove('discover_build')
                     } else {
                         item.classList.add('header__nav-btn_active')
+                        discover.classList.add('discover_build')
                     }
                 })
                 screen.forEach((item) => {
