@@ -5,7 +5,12 @@
     column-gap: 2.25rem;
     align-items: center;
     justify-content: center;
-    height: calc(100% - 86px);
+    min-height: calc(720px - 86px);
+    &_build {
+        grid-template-columns: 30% 35% 35%;
+        grid-template-rows: 60% 40%;
+        height: 100%;
+    }
     &__item {
         background-position: center bottom;
         aspect-ratio: auto;
@@ -20,6 +25,9 @@
         justify-content: center;
     }
     &__title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-bottom: 0;
         font-family: 'Open Sans';
         font-style: normal;
