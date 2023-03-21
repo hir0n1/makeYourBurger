@@ -16,6 +16,12 @@ body {
     overflow-y: auto;
 }
 
+@media (max-height: 772px) {
+    body {
+        min-height: 800px;
+    }
+}
+
 p {
     margin-bottom: 0;
 }
