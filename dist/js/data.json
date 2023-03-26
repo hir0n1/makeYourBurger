@@ -4,7 +4,7 @@
       "kcal": 120,
       "oz": 0.2,
       "price": 1,
-      "min": 3,
+      "min": 0,
       "img": "./img/igridients/bun_top.png",
       "width": 0,
       "auto": true
@@ -14,7 +14,7 @@
       "kcal": 90,
       "oz": 0.2,
       "price": 1,
-      "min": 3,
+      "min": 0,
       "img": "./img/igridients/bun_bottom.png",
       "width": 6,
       "auto": true

@@ -83,6 +83,11 @@
             
             <div class="build-burger__burger js-screen" style="display: none;">
                 <img class="build-burger__item" src="./img/burger/bun_bottom.png" alt="bun_bottom">
+                <div class="build-burger__question" style="display: none">
+                    <img src="./img/icons/blow_face.png" alt="">
+                    Are you shure?
+                </div>
+                <img class="build-burger__ketchup-img" style="display: none;" src="./img/igridients/ketchup.png" alt="">
             </div>
             <div class="build-burger__summary js-screen" style="display: none;">
                 <h2 class="build-burger__title">Summary</h2>
@@ -96,11 +101,12 @@
                     <div class="calculate__weight"><img src="./img/burger/SummaryWeight.svg" alt="weight"><span class="build-burger__calculate-data-name" data-name="oz" data-value="0">oz</span></div>
                     <div class="calculate__kcal"><img src="./img/burger/SummaryKcal.svg" alt="kcal"><span class="build-burger__calculate-data-name" data-name="kcal" data-value="0">kcal</span></div>
                 </div>
+                <button class="build-burger__ketchup"> 
+                    + Tomato Ketchup <span class="build-burger__ketchup-black">1.2 oz</span>
+                    
+                </button>
             </div>
-            <ul class="build-burger__ingridients js-screen" style="display: none;">
-                
-            </ul>
-            
+            <ul class="build-burger__ingridients js-screen" style="display: none;"></ul>            
         </section>
          
     </main>
@@ -132,6 +138,8 @@
            </div>
         </li>
     </template>
+
+  
 
     <script src="./js/script.js"></script>
 </body>

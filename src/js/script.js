@@ -44,11 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let topBun;
     const burger = document.querySelector('.build-burger__burger');
-
+    const $price = document.querySelector(".build-burger__checkout-summ");
+    const $calculate = [...document.querySelectorAll('.build-burger__calculate-data-name')]
 
     function loadInrgedients() {
         const template = document.querySelector('#ingredient');
         const ingredients = document.querySelector('.build-burger__ingridients');
+        
         let data;
         
 
@@ -78,56 +80,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 cloneAddBtn.addEventListener("click", () => addInrgedient(el));
                 cloneRemoveBtn.addEventListener("click", () => removeInrgedient(el));
-
-                
             });
             topBun = data[0]
         }); 
     }
    
     function readFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function() {
-        if (rawFile.readyState === 4 && rawFile.status == "200") {
-            callback(rawFile.responseText);
+        var rawFile = new XMLHttpRequest();
+        
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
         }
+        rawFile.send(null);
     }
-    rawFile.send(null);
-    }
-    
-    
 
-    
-
-    let ingHeight = 20
+    let ingHeight = 5
 
     function addInrgedient(ing) {
         const newIngridient = document.createElement('img')
         const burgerElements = document.querySelectorAll('.build-burger__item')
 
+        $price.dataset.price = (parseFloat($price.dataset.price) + ing.price).toFixed(2);
+        $calculate.forEach($data => {
+            if ($data.dataset.name === 'min') $data.dataset.value = (parseFloat($data.dataset.value) + ing.min).toFixed(2);
+            if ($data.dataset.name === 'oz') $data.dataset.value = (parseFloat($data.dataset.value) + ing.oz).toFixed(1);
+            if ($data.dataset.name === 'kcal') {
+                const curKcal = parseFloat($data.dataset.value) + ing.kcal;
+                $data.dataset.value = curKcal.toFixed(0);
+              
+                question(curKcal > 1500)
+            }
+        });
+
         newIngridient.classList.add(ing.name);
         newIngridient.classList.add('build-burger__item')
         
-        // верхняя булочка
         if (burgerElements[burgerElements.length - 1].classList.contains('Bun-top')) {
             burgerElements[burgerElements.length - 1].remove()
-            ingHeight -= 20
+            ingHeight -= 4
+            $calculate.forEach($data => {
+                if ($data.dataset.name === 'min') $data.dataset.value = (parseFloat($data.dataset.value) - topBun.min).toFixed(2);
+                if ($data.dataset.name === 'oz') $data.dataset.value = (parseFloat($data.dataset.value) - topBun.oz).toFixed(1);
+                if ($data.dataset.name === 'kcal') {
+                   const curKcal = parseFloat($data.dataset.value) - topBun.kcal;
+                   $data.dataset.value = curKcal.toFixed(0);
+     
+                   question(curKcal > 1500)
+                }
+            });
+            clearTimeout(addTopBunTimout);
+            addTopBunTimout = null;
         }
-
-        // проверка на группу ингридиентов и добавление 
 
         if (ing.img_group) {
             newIngridient.src = ing.img_group;
         } else {
             newIngridient.src = ing.img;
         }
-        ingHeight += 20
-        newIngridient.style.bottom = `${ingHeight}px`
-        burger.appendChild(newIngridient);
+        setTimeout(() => {
+            ingHeight += 4
+            newIngridient.style.bottom = `${ingHeight}%`
+            burger.appendChild(newIngridient); 
+        }, 1);
+        
 
-        //кол-во ингридиентов
         if (ing.amount) {ing.amount.dataset.value++}
 
         if (addTopBunTimout) {
@@ -141,35 +161,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const burgerSceneElements = document.querySelectorAll(`.${ing.name}`)
         const burgerElements = document.querySelectorAll('.build-burger__item')
+
         if (typeof burgerSceneElements[burgerSceneElements.length - 1] === 'undefined') {return;}
         burgerSceneElements[burgerSceneElements.length - 1].remove();
 
-        // верхняя булочка
-        
-        if (burgerElements[burgerElements.length - 1].classList.contains('Bun-top')) {
+        if (burgerElements[burgerElements.length - 1].classList.contains('Bun-top') && burgerElements.length <= 3) {
             burgerElements[burgerElements.length - 1].remove()
-            ingHeight -= 20
+            ingHeight -= 4
+            $price.dataset.price = (parseFloat($price.dataset.price) - topBun.price).toFixed(2);
+            $calculate.forEach($data => {
+                if ($data.dataset.name === 'min') $data.dataset.value = (parseFloat($data.dataset.value) - topBun.min).toFixed(2);
+                if ($data.dataset.name === 'oz') $data.dataset.value = (parseFloat($data.dataset.value) - topBun.oz).toFixed(1);
+                if ($data.dataset.name === 'kcal') {
+                   const curKcal = parseFloat($data.dataset.value) - topBun.kcal;
+                   $data.dataset.value = curKcal.toFixed(0);
+     
+                   question(curKcal > 1500)
+                 }
+            });
+            clearTimeout(addTopBunTimout);
+            addTopBunTimout = null;
         } 
+
+        if (ing.amount && parseInt(ing.amount.dataset.value) === 0 ) return;
+        $price.dataset.price = (parseFloat($price.dataset.price) - ing.price).toFixed(2);
+        $calculate.forEach($data => {
+           if ($data.dataset.name === 'min') $data.dataset.value = (parseFloat($data.dataset.value) - ing.min).toFixed(2);
+           if ($data.dataset.name === 'oz') $data.dataset.value = (parseFloat($data.dataset.value) - ing.oz).toFixed(1);
+           if ($data.dataset.name === 'kcal') {
+              const curKcal = parseFloat($data.dataset.value) - ing.kcal;
+              $data.dataset.value = curKcal.toFixed(0);
+
+              question(curKcal > 1500)
+            }
+        });
+       
         if (burgerElements.length > 2) {addTopBun()} 
         if (addTopBunTimout) {
             clearTimeout(addTopBunTimout);
             addTopBunTimout = null;
         } 
-        
 
-        // высота игридиента 
-        ingHeight -= 20
+        ingHeight -= 4
         const bottomToRemove = parseInt(burgerSceneElements[burgerSceneElements.length - 1].style.bottom);
         const ingToUpdate = document.querySelectorAll(`.build-burger__item[style*="bottom"]:not([style*="bottom:${bottomToRemove}px"])`);
         
         ingToUpdate.forEach((element) => {
             if (parseInt(burgerSceneElements[burgerSceneElements.length - 1].style.bottom) <  parseInt(element.style.bottom)) {
                 const currentBottom = parseInt(element.style.bottom);
-                element.style.bottom = `${currentBottom - 20}px`;
+                element.style.bottom = `${currentBottom - 4}%`;
             }
         });
-
-        //
 
         if (ing.amount) {ing.amount.dataset.value--}
     }
@@ -183,8 +225,46 @@ document.addEventListener('DOMContentLoaded', function() {
             addTopBunTimout = null;
             
         }, 3000);  
+    }   
+
+    function question(value) {
+        const $question = document.querySelector('.build-burger__question');
+
+        if (value === true) {
+            $question.style.display = 'block'
+        } else {
+            $question.style.display = 'none'
+        }
+    }
+    
+    function addKetchup() {
+        const $ketchupBtn = document.querySelector('.build-burger__ketchup');
+        const $ketchupImg = document.querySelector('.build-burger__ketchup-img');
+
+        $ketchupBtn.addEventListener('click', () => {
+            $ketchupImg.style.display = $ketchupImg.style.display === 'none' ? 'block' : 'none';
+            if ($ketchupImg.style.display === 'none') {
+                $calculate.forEach($data => {
+                    if ($data.dataset.name === 'oz') $data.dataset.value = (parseFloat($data.dataset.value) - 1.2).toFixed(1);
+                }) 
+            } else {
+                $calculate.forEach($data => {
+                    if ($data.dataset.name === 'oz') $data.dataset.value = (parseFloat($data.dataset.value) + 1.2).toFixed(1);
+                }) 
+            }    
+        })
+    }
+
+    let start = true
+    let timerId 
+
+    function preventSpamAddIngredient() {
+        start = false
+        timerId = setTimeout(() => {
+            start = true
+        }, 500)
     }
 
     loadInrgedients()
-
+    addKetchup()
 }); 
