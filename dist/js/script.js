@@ -40,6 +40,29 @@ document.addEventListener('DOMContentLoaded', function() {
     changeScreen(changeScreenBtn, screen)
     showMenu(profileButton, profileMenu)
 
+    // modal
+
+    const   modalClose = document.querySelectorAll('.js-close');
+    const   modal = document.querySelector('.js-modal');
+    const   checkout = document.querySelector('.build-burger__checkout')
+    
+    function closeModal() {
+        modalClose.forEach((item) => {
+                item.addEventListener('click', () => {
+                modal.style.display = 'none'
+            })
+        })
+        
+    }
+    function showModal() {
+        checkout.addEventListener('click', () => {
+            modal.style.display = 'block'
+        })
+    }
+
+    closeModal()
+    showModal()
+
     /// burger 
 
     let topBun;
@@ -122,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (burgerElements[burgerElements.length - 1].classList.contains('Bun-top')) {
             burgerElements[burgerElements.length - 1].remove()
             ingHeight -= 4
+            $price.dataset.price = (parseFloat($price.dataset.price) - topBun.price).toFixed(2);
             $calculate.forEach($data => {
                 if ($data.dataset.name === 'min') $data.dataset.value = (parseFloat($data.dataset.value) - topBun.min).toFixed(2);
                 if ($data.dataset.name === 'oz') $data.dataset.value = (parseFloat($data.dataset.value) - topBun.oz).toFixed(1);
@@ -253,16 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }) 
             }    
         })
-    }
-
-    let start = true
-    let timerId 
-
-    function preventSpamAddIngredient() {
-        start = false
-        timerId = setTimeout(() => {
-            start = true
-        }, 500)
     }
 
     loadInrgedients()

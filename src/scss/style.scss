@@ -3,10 +3,14 @@
 * {
     margin: 0;
     padding: 0;
-    
+    transition:.2s linear;
 }
 
 body {
+    position: relative;
+}
+
+.wrapper {
     position: relative;
     max-width: 1540px; 
     margin: 0 auto;
@@ -17,7 +21,7 @@ body {
 }
 
 @media (max-height: 772px) {
-    body {
+    .wrapper {
         min-height: 800px;
     }
 }
@@ -36,3 +40,5 @@ main {
 @import 'blocks/discover';
 @import 'blocks/burger';
 @import 'blocks/footer';
+@import 'blocks/modal';
+@import 'base/media';
